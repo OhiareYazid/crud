@@ -1,43 +1,46 @@
-// app.js
-const express = require('express');
-const bodyParser = require('body-parser');
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const cors = require ('cors');
-const app = express();
-const uri = "mongodb+srv://isahyazid1:tsCTYx5ILadH0Svh@databaseone.af0nzso.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
+// controllers/personController.js
+const Person = require("../models/personModel");
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
-  async function run() {
-    try {
-      // Connect the client to the server	(optional starting in v4.7)
-      await client.connect();
-      // Send a ping to confirm a successful connection
-      await client.db("admin").command({ ping: 1 });
-      console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    } finally {
-      // Ensures that the client will close when you finish/error
-      await client.close();
-    }
+// Create a new person
+exports.createPerson = async (req, res) => {
+  const newPerson = new Person(req.body);
+  try {
+    const person = await newPerson.save();
+    console.log(res.json(person));
+    return res.json(person);
+  } catch (error) {
+    res.status(400).send(error);
   }
-  run().catch(console.dir);
+};
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cors());
-//tsCTYx5ILadH0Svh
-// app.js
-const personRoutes = require('./routes/personRoutes');
-app.use('/api', personRoutes);
+// Get details of a person by user_id
+exports.getPerson = async (req, res) => {
+  try {
+    const person = await Person.findById(req.params.user_id);
 
+    return res.json(person);
+  } catch (error) {
+    res.status(404).send("Person not found");
+  }
+};
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Update details of an existing person by user_id
+exports.updatePerson =  (req, res) => {
+  Person.findByIdAndUpdate(
+    req.params.user_id,
+    req.body,
+    { new: true },
+    (err, person) => {
+      if (err) res.status(400).send(err);
+      res.json(person);
+    }
+  );
+};
+
+// Remove a person by user_id
+exports.deletePerson = (req, res) => {
+  Person.findByIdAndRemove(req.params.user_id, (err) => {
+    if (err) res.status(404).send("Person not found");
+    res.send("Person deleted successfully");
+  });
+};
