@@ -1,11 +1,21 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
-const personSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  // Add other fields as needed
+const PersonSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, 'Please add a name'] 
+    },
+    slug: String,
+    role: {
+        type: String,
+        default: 'user'
+    }
 });
 
-module.exports = mongoose.model('Person', personSchema);
+PersonSchema.pre('save', function(next){
+    this.slug = slugify(this.name, {lower: true})
+    next();
+});
+
+module.exports = mongoose.model('Person', PersonSchema);

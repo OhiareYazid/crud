@@ -1,38 +1,112 @@
-const Person = require("../models/personModel");
+const Person = require('../models/personModel');
 
-// Create a new person
-exports.createPerson = async (req, res) => {
-  const newPerson = new Person(req.body);
-  try {
-    const person = await newPerson.save();
-    res.json(person);
-  } catch (error) {
-    res.status(400).send(error);
-  }
+
+/**
+ * @desc Get one person
+ * @route GET /api/:id
+ * @access Public
+ */
+exports.getPersons = async (req, res) => {
+
+    {
+        const persons = await Person.find();
+
+        res.status(200).json({
+            success: true,
+            count: persons.length,
+            data: persons,
+            status: 200
+        });
+    }
 };
 
-// Get details of a person by user_id
+/**
+ * @desc Get one person
+ * @route GET /api/:id
+ * @access Public
+ */
 exports.getPerson = async (req, res) => {
-  try {
-    const person = await Person.findById(req.params.user_id);
-    res.json(person);
-  } catch (error) {
-    res.status(404).send("Person not found");
-  }
+  
+    const person = await Person.findById(req.params.id)
+
+    res.status(200).json({
+        success: true,
+        data: person,
+        status: 200
+    });
+   
 };
 
-// Update details of an existing person by user_id
-exports.updatePerson = async (req, res) => {
-  const person = await Person.findByIdAndUpdate(
-    req.params.user_id,
-    req.body,
-    { new: true }
-  );
-  res.json(person);
+/**
+ * @desc Get people by name
+ * @route GET /api/:id
+ * @access Public
+ 
+*/
+/**
+ * @desc Create a person
+ * @route POST /api
+ * @access Public
+ */
+exports.createPerson = async (req, res) => {
+    const {name, state, address, occupation, annualSalary, monthlySalary} = req.body;
+
+
+    const person = await Person.create({
+        name : name.toLowerCase().split(" ").join(''),
+        state,
+        address,
+        occupation,
+        annualSalary,
+        monthlySalary
+    });
+
+    res.status(200).json({
+        success: true,
+        data: person,
+        status: 200
+    });
 };
 
-// Remove a person by user_id
+/**
+ * @desc Update a person
+ * @route PUT /api/:id
+ * @access Public
+ */
+exports.updatePerson = async (req, res, next) => {
+    const {name, state, address, occupation, annualSalary, monthlySalary} = req.body;
+
+    const person = await Person.findById(req.params.id);
+
+    person.name = name ?  name.toLowerCase().split(" ").join('') : person.name;
+    // person.state = state ? state : person.state;
+    // person.address = address ? address : person.address;
+    // person.occupation = occupation ? occupation : person.occupation;
+    // person.annualSalary = annualSalary ? annualSalary : person.annualSalary;
+    // person.monthlySalary = monthlySalary ? monthlySalary : person.monthlySalary;
+
+    await person.save();
+
+    res.status(200).json({
+        success: true,
+        data: person,
+        status: 200
+    });
+};
+
+/**
+ * @desc Delete a Person
+ * @route DELETE /api/:id
+ * @access Public
+ */
 exports.deletePerson = async (req, res) => {
-  await Person.findByIdAndRemove(req.params.user_id);
-  res.send("Person deleted successfully");
+    const person = await Person.findById(req.params.id);
+
+    await Person.deleteOne(person._id);
+
+    res.status(200).json({
+        success: true,
+        data: {},
+        status: 200
+    });
 };
