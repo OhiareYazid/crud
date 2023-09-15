@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const cors = require ('cors');
 const app = express();
 const uri = "mongodb+srv://isahyazid1:tsCTYx5ILadH0Svh@databaseone.af0nzso.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
 
@@ -29,6 +30,7 @@ const client = new MongoClient(uri, {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 //tsCTYx5ILadH0Svh
 // app.js
 const personRoutes = require('./routes/personRoutes');
