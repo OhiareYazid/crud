@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
-const uri = "mongodb+srv://isahyazid1:EnHPBJEgZ7TsaWv@cluster0.g7m2pzi.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
+const uri = "mongodb+srv://isahyazid1:iEnHPBJEgZ7TsaWv@cluster0.g7m2pzi.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
