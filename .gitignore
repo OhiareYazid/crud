@@ -4,3 +4,5 @@ donothing.js/
 donothing/
 donothing/*
 donothing.js/*
+config/.env
+config/.env/

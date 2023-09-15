@@ -10,7 +10,25 @@ const PersonSchema = new mongoose.Schema({
     role: {
         type: String,
         default: 'user'
-    }
+    },
+    // state: {
+    //     type: String,
+    //     required: [true, "Please add State"]
+    // },
+    // address: {
+    //     type: String,
+    //     required: [true, 'Please add address']
+    // },
+    // occupation: {
+    //     type: String,
+    //     required: [true, "Please, add "]
+    // },
+    // annualSalary: {
+    //     type: String
+    // },
+    // monthlySalary: {
+    //     type: String
+    // }
 });
 
 PersonSchema.pre('save', function(next){
