@@ -3,10 +3,11 @@ const Person = require("../models/personModel");
 
 // Create a new person
 exports.createPerson = async (req, res) => {
-  console.log(req.body);
+  
   const newPerson = new Person(req.body);
   try {
     const person = await newPerson.save();
+    console.log(res.json(person));
     return res.json(person);
   } catch (error) {
     res.status(400).send(error);
