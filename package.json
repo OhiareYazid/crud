@@ -1,0 +1,26 @@
+{
+  "name": "crud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/OhiareYazid/crud.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OhiareYazid/crud/issues"
+  },
+  "homepage": "https://github.com/OhiareYazid/crud#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "mongoose": "^7.5.1",
+    "supertest": "^6.3.3"
+  }
+}
