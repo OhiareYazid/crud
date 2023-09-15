@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
-const uri = "mongodb+srv://isahyazid1:VuNhsoWwt1k5NbW1@cluster0.g7m2pzi.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
+const uri = "mongodb+srv://isahyazid1:tsCTYx5ILadH0Svh@databaseone.af0nzso.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -29,7 +29,7 @@ const client = new MongoClient(uri, {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+//tsCTYx5ILadH0Svh
 // app.js
 const personRoutes = require('./routes/personRoutes');
 app.use('/api', personRoutes);
